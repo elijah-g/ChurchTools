@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simple Attendance System in PHP, MySQL and Bootstrap
 
 Note: This is no longer maintained by the author. Feel free to fork this project and submit pull request if you fix issues listed in the TO DO section below.
@@ -70,3 +71,6 @@ This is obviously not a finished application but will give you a start if you wa
 - Create a way to delete a student from a class (from Take Attendance page?).
 - When deleting a student, delete their attendance records too.
 - When deleting a class, add deletion of attendance records too.
+=======
+# ChurchTools
+>>>>>>> 7bc4458d5a42e155b97d4bfe0313103d3e01e5e8
