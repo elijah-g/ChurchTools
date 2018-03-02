@@ -1,132 +1,55 @@
 <?php
-$pageTitle = 'Take Attendance';
+$pageTitle = 'Count the Sheep';
 include('header.php');
 require("db-connect.php");
-if(!(isset($_COOKIE['teacher']) && $_COOKIE['teacher']==1)){
-    echo 'Only teachers can create new teachers and students.';
-    $conn->close();
-    include('footer.php');
-    exit;
-}
-//get session count
-$query = "SELECT * FROM attendance";
-$result = $conn->query($query);
-$sessionCount=0;
-setcookie('sessionCount', ++$sessionCount);
-if(mysqli_num_rows($result)>0){
-    while($row = $result->fetch_assoc()){
-        $sessionCount = $row['session'];
-        setcookie('sessionCount', ++$sessionCount);
-    }
-}
 
-if(isset($_GET['class']) && !empty($_GET['class'])){
-    $whichClass = $_GET['class'];
-    $whichClassSQL = "AND class='" . $_GET['class'] . "'";
-} else {
-    $whichClass = '';
-    $whichClassSQL = 'ORDER BY class';
-}
-    
-echo '
-    <div class="row">
-        <div class="col-md-4">
-            <div class="input-group">
-                <input type="number" id="session" name="sessionVal" class="form-control" placeholder="Session Value i.e 1" required>
-                <span class="input-group-btn">
-                    <input id="submitAttendance" type="button" class="btn btn-success" value="Submit Attendance" name="submitAttendance">
-                </span>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <form method="get" action="' . $_SERVER['PHP_SELF'] . '" class="col-md-4">
-                <select name="class" id="class" class="form-control" onchange="if (this.value) window.location.href=this.value">
-';
+//for loop to loop through each house hold
+//$i < 4 will need to be changed to household count.
+echo "<form method='post' action='rollprocess.php'>";
+for ($i = 1; $i<4; $i++) {
+    $query = "SELECT * FROM Households WHERE HouseID = $i";
+    $result = $conn->query($query);
+    while($row = $result->fetch_assoc()) {
+        $householdname = $row['HouseName'];
+        $householdID = $row['HouseID'];
+        echo <<<OUTPUT
 
-// Generate list of classes.
-$query = "SELECT DISTINCT class FROM user ORDER BY class;";
-$classes = $classes = mysqli_query($conn, $query);
-if($classes && mysqli_num_rows($classes)){
-    // Get list of available classes.
-    echo '    <option value="">Filter: Select a class</option>';
-    echo '    <option value="?class=">All classes</option>';
-    while($class = $classes->fetch_assoc()){
-        echo '    <option value="?class=' . $class['class'] . '">' . $class['class'] . '</option>';
-    }
-} else {
-    echo '    <option value="?class=" disabled>No classes defined.</option>';
-}
+<fieldset>
+<legend>$householdname <input type="checkbox" name="Household[]" id="$householdID" onchange="householdcheck($householdID)" value="$householdID" ></legend>
+OUTPUT;
 
-echo '
-                </select>
-            </form>
-        </div>
-    </div>
-';
+            $query2 = "SELECT * FROM Individuals WHERE HouseID = $i";
+            $result2 = $conn->query($query2);
+            while($row2 = $result2->fetch_assoc()) {
+                $individualName = $row2["Name"];
+                $personID = $row2["PersonID"];
+                echo <<<OUTPUT
+            <p>$individualName <input type="checkbox" class="$householdID" name="Person[]" ></p>
 
-$query = "SELECT * FROM user WHERE role='student' $whichClassSQL;";
-$result = $conn->query($query);
-?>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Class</th>
-            <th>Present</th>
-            <th>Absent</th>
-        </tr>
-        </thead>
-        <tbody>
-        <form method="post" action="save-attendance.php" id="attendanceForm">
-        <?php
-        if(mysqli_num_rows($result) > 0){
-            $i=0;
-            while($row = $result->fetch_assoc()){
-
-                ?>
-                <tr>
-                        <td><input type="hidden" value="<?php echo($row['id']);?>" form="attendanceForm"><input type="text" readonly="readonly" name="name[<?php echo $i; ?>]" value="<?php echo $row['fullname'];?>" form="attendanceForm"></td>
-                        <td><input type="text" readonly="readonly" name="email[<?php echo $i; ?>]" value="<?php echo $row['email'];?>" form="attendanceForm"></td>
-                        <td><input type="text" readonly="readonly" name="class[<?php echo $i; ?>]" value="<?php echo $row['class'];?>" form="attendanceForm"></td>
-                        <td><input type="radio" value="present" name="present[<?php echo $i; ?>]" checked form="attendanceForm"></td>
-                        <td><input type="radio" value="absent" name="present[<?php echo $i; ?>]" form="attendanceForm"></td>
-                </tr>
-
-            <?php $i++;
+OUTPUT;
             }
-        }
-        ?>
-        </form>
-        </tbody>
-
-    </table>
-<script>
-$("#submitAttendance").click(function(){
-    if($("#session").val().length==0){
-        alert("session is required");
-    } else {
-        $.cookie("sessionVal", $("#session").val());
-        var data = $('form#attendanceForm').serialize();
-        $.ajax({
-            url: 'save-attendance.php',
-            method: 'post',
-            data: {formData: data},
-            success: function (data) {
-                console.log(data);
-               if (data != null && data.success) {
-                   alert('Success');
-               } else {
-                   alert(data.status);
-               }
-            },
-            error: function () {
-               alert('Error');
-            }
-        });
-    }
-});
-</script>
-<?php 
+            echo "</fielset>";
+}
+}
+echo "<br><br><input type='submit' value='Submit'>";
+echo "</form>";
 $conn->close();
 include('footer.php');
+
+?>
+
+<script>
+    function householdcheck(i) {
+        members = document.getElementsByClassName(i);
+        if (!document.getElementById(i).checked) {
+            for (j = 0; j < members.length; j++) {
+                members[j].checked = false;
+            }
+        }
+        if (document.getElementById(i).checked) {
+            for (j = 0; j < members.length; j++) {
+                members[j].checked = true;
+            }
+        }
+    }
+</script>

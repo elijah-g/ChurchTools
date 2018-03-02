@@ -8,39 +8,45 @@ $teacher = 0;
 $student = 0;
 $loginId = 0;
 $errmsg = '';
-if(isset($_POST['login']) && isset($_POST['email']) && !empty($_POST['email'])){
+if(isset($_POST['login']) && isset($_POST['username']) && !empty($_POST['username'])){
 
-    $email = $_POST['email'];
-    $query = "SELECT * FROM user WHERE email='".$email."' AND role='teacher';";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $query = 'SELECT * FROM Logins';
 
     $result = $conn->query($query);
 
     if ($result && $result->num_rows > 0){
-        $isLogin = 1;
+
         // output data of each row
         while($row = $result->fetch_assoc()) {
 
-            if($row['role']=='teacher'){
-                $teacher=1;
-                $student=0;
-                header('Location: index.php');
+            if(($row["username"]== $username)){
+                if ($row["password"] == $password) {
+                    $isLogin = 1;
+                    setcookie('currentUser', $row['username']);
+                    setcookie("login", $isLogin);
+                    //$teacher=1;
+                    //$student=0;
+                    header('Location: index.php');
+                }
+                else {
+                    $errmsg = "Incorrect Password";
+                }
             }
             else{
-                $student=1;
-                $teacher=0;
-                header('Location: index.php');
+                //$student=1;
+                //$teacher=0;
+                $errmsg = "Incorrect username or password";
             }
-            setcookie('currentUser', $row['email']);
-            setcookie('loginId', $row['id']);
+
+
         }
     }
     else {
-        $errmsg = "User does no exist.";
+
     }
     $conn->close();
-    setcookie('login', $isLogin);
-    setcookie('teacher', $teacher);
-    setcookie('student', $student);
 }
 ?>
 <form method="post" action="<?php echo($_SERVER['PHP_SELF'])?>">
@@ -57,7 +63,8 @@ if(isset($_POST['login']) && isset($_POST['email']) && !empty($_POST['email'])){
                 }
                 ?>
             <div class="input-group">
-                <input type="email" name="email" id="email" class="form-control" required placeholder="Email address">
+                <input type="text" name="username" id="username" class="form-control" required placeholder="Reuired Username">
+                <input type="password" name="password" id="password" class="form-control" required placeholder="Reuired Password">
                 <span class="input-group-btn"><input type="submit" name="login" class="btn btn-primary" value="Login"></span>
             </div><!-- /input-group -->
           </div><!-- /.col-md-6 -->
