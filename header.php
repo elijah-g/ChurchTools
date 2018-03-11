@@ -16,8 +16,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link rel="stylesheet" href="css.css" type="text/css">
     <script src="js.js"></script>
+    <link rel="shortcut icon" href="//edge.ldscdn.org/cdn2/common/images/logos/favicon-lds-1.ico">
 </head>
-<body>
+<body onload="countchecker()">
 <div class="container">
 <?php include ("nav.php");?>
 <div class="panel panel-primary" style="border: none;">

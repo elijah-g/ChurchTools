@@ -17,11 +17,13 @@
             </ul>
                 <ul class="nav navbar-nav navbar-right" style="margin-right:25px;">
                 <?php
-                    if(isset($_COOKIE['student']) || isset($_COOKIE['teacher']) || isset($_COOKIE['login'])){
+
+                    if(isset($_COOKIE['login'])){
                         echo '<li><a href="logout.php" id="loginout" class="btn btn-default">Logout</a></li>';
                     } else {
                         echo '<li><a href="login.php" id="loginout" class="btn btn-default">Login</a></li>';
                     }
+
                 ?>
             </ul>
 

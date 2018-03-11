@@ -63,8 +63,8 @@ if(isset($_POST['login']) && isset($_POST['username']) && !empty($_POST['usernam
                 }
                 ?>
             <div class="input-group">
-                <input type="text" name="username" id="username" class="form-control" required placeholder="Reuired Username">
-                <input type="password" name="password" id="password" class="form-control" required placeholder="Reuired Password">
+                <input type="text" name="username" id="username" class="form-control" required placeholder="Required Username">
+                <input type="password" name="password" id="password" class="form-control" required placeholder="Required Password">
                 <span class="input-group-btn"><input type="submit" name="login" class="btn btn-primary" value="Login"></span>
             </div><!-- /input-group -->
           </div><!-- /.col-md-6 -->
