@@ -15,7 +15,7 @@ if (isset($_POST['Send'])){
     $Numbers1 = unserialize($_POST["HTPhone1"]);
     $Date = $_POST["Date"];
     //echo $Date;
-    $smsGateway = new SmsGateway('elijah.glass@gmail.com','');
+    $smsGateway = new SmsGateway('elijah.glass@gmail.com','Reds2017');
     $deviceid = 82436;
     $responses = array();
     $count = 0;
