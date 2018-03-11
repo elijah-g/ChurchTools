@@ -26,8 +26,15 @@ echo "<form method='post' id='myForm' action='rollprocess.php'>";
 </div>
 <p id="output"></p>
 <p id = "output1"></p>
+
 <?php
-for ($i = 1; $i<4; $i++) {
+$householdsquery = "SELECT COUNT(*) FROM Individuals";
+$result3 = $conn->query($householdsquery);
+while($row3 = $result3->fetch_assoc()){
+    $count1 = $row3["COUNT(*)"];
+}
+echo $count1;
+for ($i = 1; $i<$count1; $i++) {
     $query = "SELECT * FROM Households WHERE HouseID = $i";
     $result = $conn->query($query);
     while($row = $result->fetch_assoc()) {
