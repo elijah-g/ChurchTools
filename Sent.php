@@ -36,23 +36,26 @@ if (isset($_POST['Send'])){
 
 
             $number = $numberArray;
-            $message = "Hi, The following family member(s) from the $houseName family were not present at Church today: ";
+            $message = "Hi, The following individual(s) from the $houseName family were not at Church today: ";
             foreach ($indArray as $ind) {
+                $indEdit = explode(" ", $ind);
                 if (count($indArray) == 1) {
-                    $message .= $ind;
+
+                    $message .= $indEdit[0];
                 } else {
-                    $message .= ", $ind";
+                    $message .= ", $indEdit[0]";
                 }
             }
             $options = ['send_at'=>strtotime("now"),'expires_at'=>strtotime("+1hour")];
-            $message .= ". Please ensure their spiritual/temporal welfare & return & report. -The Bishopric-";
+            $message .= ". Please make sure they're okay and let us know . -The Bishopric";
             $result = $smsGateway->sendMessageToNumber($number, $message, $deviceid,$options);
+
             //echo "$message<br>";
             $count = count + 1;
 
         }
     }
-    echo "<script>alert('$count message(s) sent to server.');window.location.href='index.php';</script>";
+    //echo "<script>alert('$count message(s) sent to server.$message');window.location.href='index.php';</script>";
 }
 else{
     header("location: index.php");
