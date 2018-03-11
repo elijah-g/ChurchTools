@@ -31,7 +31,7 @@ echo "<form method='post' id='myForm' action='rollprocess.php'>";
 $householdsquery = "SELECT COUNT(*) FROM Households";
 $result3 = $conn->query($householdsquery);
 while($row3 = $result3->fetch_assoc()){
-    $count1 = $row3["COUNT(*)"];
+    $count1 = $row3["COUNT(*)"]+1;
 }
 //echo $count1;
 for ($i = 1; $i<$count1; $i++) {
