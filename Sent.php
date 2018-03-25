@@ -36,7 +36,8 @@ if (isset($_POST['Send'])){
 
 
             $number = $numberArray;
-            $message = "Hi, The following individual(s) from the $houseName family were not at Church today: ";
+            $HouseNameDil = explode(",", $houseName);
+            $message = "Hi, The following individual(s) from the {$HouseNameDil[0]} family were not at Church today: ";
             $first = true;
             foreach ($indArray as $ind) {
                 $indEdit = explode(" ", $ind);
@@ -48,16 +49,17 @@ if (isset($_POST['Send'])){
                     $message .= ", $indEdit[0]";
                 }
             }
-            $options = ['send_at'=>strtotime("now"),'expires_at'=>strtotime("+1hour")];
+            $options = ['send_at'=>strtotime("today 7:05"),'expires_at'=>strtotime("today 8:05")];
             $message .= ". Please make sure they are okay and let us know. -The Bishopric";
             $result = $smsGateway->sendMessageToNumber($number, $message, $deviceid,$options);
 
-            //echo "$message<br>";
-            $count = count + 1;
+            echo print_r($result);
+
+            $count = $count + count($number);
 
         }
     }
-    echo "<script>alert('$count message(s) sent to server.$message');window.location.href='index.php';</script>";
+    echo "<script>alert('$count message(s) sent to server.');window.location.href='index.php';</script>";
 }
 else{
     header("location: index.php");
