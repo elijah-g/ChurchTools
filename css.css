@@ -98,3 +98,66 @@ input[readonly="readonly"] {
     display: none;
     text-align: center;
 }
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 20%;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/*td:nth-child(1){*/
+    /*width:200px;*/
+/*}*/
+
+#true {
+    text-align: center;
+    color:darkgreen;
+}
+#false{
+    text-align: center;
+    color:darkred;
+}
+
+.fa-exclamation-triangle{
+    color:gold;
+}
+
+#date{
+    text-align: center;
+    font-weight: bold;
+}
+
+#housename{
+    font-weight: bold;
+}
+
+#firstrow{
+    margin-top: 10px;
+}
+
+#myInput {
+    width: 50%;
+    font-size: 16px;
+    padding: 12px 20px 12px 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+.fa-search {
+    font-size: 20px;
+    padding: 11px 20px 15px 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
