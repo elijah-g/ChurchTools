@@ -1,6 +1,6 @@
 <?php
 
-$servername = "localhost";
+$servername = "192.168.20.10";
 $username = "root";
 $password = "Reds2017";
 $database = 'ChurchTools';

@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Attendance Report';
+$pageTitle = 'Report';
 include('header.php');
 require("db-connect.php");
 if (isset($_COOKIE['login'])) {
@@ -18,6 +18,15 @@ while ($row2 = $dateCheck->fetch_assoc()){
 }
 
 
+$dateOne = date_create($dateArray[3]);
+$dateOne = date_format($dateOne,"j F Y");
+$dateTwo = date_create($dateArray[4]);
+$dateTwo = date_format($dateTwo,"j F Y");
+$dateThree = date_create($dateArray[5]);
+$dateThree = date_format($dateThree,"j F Y");
+$dateFour = date_create($dateArray[6]);
+$dateFour = date_format($dateFour,"j F Y");
+
 
 $householdsquery = "SELECT COUNT(*) FROM Households";
 $result3 = $conn->query($householdsquery);
@@ -33,8 +42,8 @@ for ($i = 1; $i<$count1; $i++) {
         $householdname = $row['HouseName'];
         $householdID = $row['HouseID'];
         echo <<<OUTPUT
-        
-<tr id = "firstrow"><td id = "housename">$householdname</td><td id="date">$dateArray[3]</td><td id="date">$dateArray[4]</td><td id="date">$dateArray[5]</td><td id="date">$dateArray[6]</td></tr>
+      
+<tr id = "firstrow"><td id = "housename">$householdname</td><td id="date">$dateOne</td><td id="date">$dateTwo</td><td id="date">$dateThree</td><td id="date"></td></tr>
 OUTPUT;
 
         $query2 = "SELECT * FROM Individuals WHERE HouseID = $i";
@@ -47,7 +56,7 @@ OUTPUT;
             $date3 = $row2[$dateArray[5]];
             $date4 = $row2[$dateArray[6]];
             $sumDate = $date1+$date2+$date3+$date4;
-            if(($sumDate)>=1){
+            if(($sumDate)>=2){
                 echo "<tr><td><i class='fas fa-exclamation-triangle'></i>$individualName</td>";
             }
             else{
@@ -101,6 +110,7 @@ OUTPUT;
 
 
     }
+//    echo "<tr id = 'spacer'></tr>";
 }
 echo "</table>";
 echo <<< OUTPUT

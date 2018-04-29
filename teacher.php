@@ -13,7 +13,6 @@ while ($row2 = $dateCheck->fetch_assoc()){
     }
 
 //for loop to loop through each house hold
-//$i < 4 will need to be changed to household count.
 echo "<form method='post' id='myForm' action='rollprocess.php'>";
 ?>
 <div class="dateSelect">
@@ -34,8 +33,8 @@ while($row3 = $result3->fetch_assoc()){
     $count1 = $row3["COUNT(*)"]+1;
 }
 //echo $count1;
-for ($i = 1; $i<$count1; $i++) {
-    $query = "SELECT * FROM Households WHERE HouseID = $i";
+for ($i = 0; $i<$count1; $i++) {
+    $query = "SELECT * FROM Households LIMIT $i,1";
     $result = $conn->query($query);
     while($row = $result->fetch_assoc()) {
         $householdname = $row['HouseName'];
@@ -46,7 +45,7 @@ for ($i = 1; $i<$count1; $i++) {
 <legend>$householdname <input type="checkbox" name="Household[]" id="$householdID" onchange="householdcheck($householdID)" value="$householdID" ></legend>
 OUTPUT;
 
-            $query2 = "SELECT * FROM Individuals WHERE HouseID = $i";
+            $query2 = "SELECT * FROM Individuals WHERE HouseID = $householdID";
             $result2 = $conn->query($query2);
             while($row2 = $result2->fetch_assoc()) {
                 $individualName = $row2["Name"];
@@ -60,7 +59,7 @@ OUTPUT;
 }
 }
 
-
+echo "<br><legend>Others in attendance:</legend><input type='number' name='visitors' placeholder='Number...' min='0'> ";
 
 echo "<br><br><input type='submit' value='Submit'>";
 echo "</form>";

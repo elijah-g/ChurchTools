@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Attendance System - <?php echo $pageTitle; ?></title>
+    <title>Leschenault Ward - <?php echo $pageTitle; ?></title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!--Font Awesome CSS-->
@@ -15,7 +15,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <link rel="stylesheet" href="css.css" type="text/css">
+    <link rel="stylesheet" href="cssOne.css" type="text/css">
     <script src="js.js"></script>
     <link rel="shortcut icon" href="//edge.ldscdn.org/cdn2/common/images/logos/favicon-lds-1.ico">
 </head>

@@ -18,6 +18,7 @@ $absentArrayHouseName = array();
 $absentArrayInd = array();
 //$absentArrayName = array();
 $Date = $_POST["date"];
+$visitors = $_POST["visitors"];
 $addDateQuery = "ALTER TABLE `Individuals` ADD `$Date` INT NOT NULL AFTER `Name`";
 $conn->query($addDateQuery);
 $newDate = date('d-m-Y', strtotime($Date));
@@ -52,7 +53,13 @@ foreach ($_POST["Person"] as $person) {
 }
 $totalAbsent = count($absentArrayInd);
 echo "<h3>$showDate</h3><p><b>$totalAbsent</b> people are missing</p>";
-
+$householdsquery = "SELECT COUNT(*) FROM Individuals";
+$result3 = $conn->query($householdsquery);
+while($row3 = $result3->fetch_assoc()){
+    $count1 = $row3["COUNT(*)"]+1;
+}
+$Present = $count1 - $totalAbsent + $visitors;
+echo "<p><b>$Present</b> were at church today</p>";
 if ((!empty($absentArrayInd))){
     echo "<table class='receiptcont'>";
     echo "<tr class='Tableheader'><th>Name</th><th>Home Teachers</th><th>HT Mobile</th><th>Send HT Text</th></tr>";
