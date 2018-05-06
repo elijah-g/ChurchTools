@@ -43,7 +43,7 @@ for ($i = 1; $i<$count1; $i++) {
         $householdID = $row['HouseID'];
         echo <<<OUTPUT
       
-<tr id = "firstrow"><td id = "housename">$householdname</td><td id="date">$dateOne</td><td id="date">$dateTwo</td><td id="date">$dateThree</td><td id="date"></td></tr>
+<tr id = "firstrow"><td id = "housename">$householdname</td><td id="date">$dateOne</td><td id="date">$dateTwo</td><td id="date">$dateThree</td><td id="date">$dateFour</td></tr>
 OUTPUT;
 
         $query2 = "SELECT * FROM Individuals WHERE HouseID = $i";
